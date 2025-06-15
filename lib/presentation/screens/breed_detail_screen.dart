@@ -61,9 +61,13 @@ class DetailWidget extends StatelessWidget {
                   fit: BoxFit.fill,
                 ),
                 Expanded(
-                  child: SingleChildScrollView(
-                    padding: EdgeInsets.all(16),
-                    child: DetailDescriptionWidget(breedDetail: breedDetail, breedTemperament: breedTemperament),
+                  child: SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: SingleChildScrollView(
+                        child: DetailDescriptionWidget(breedDetail: breedDetail, breedTemperament: breedTemperament),
+                      ),
+                    ),
                   ),
                 )
               ],

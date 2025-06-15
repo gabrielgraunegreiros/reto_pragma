@@ -64,25 +64,28 @@ class _ListWidgetState extends State<ListWidget> {
         if (state is BreedListLoading && _page == 0) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is BreedListLoaded) {
-          return ListView.separated(
-            controller: _scrollController,
-            itemCount: state.breeds.length + (state.isLoadingMore ? 1 : 0),
-            itemBuilder: (context, index) {
-              if (index >= state.breeds.length) {
-                return const Center(child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  child: CircularProgressIndicator(),
-                ));
-              }
-              final breed = state.breeds[index];
-              final breedImage = 'https://cdn2.thecatapi.com/images/${breed.referenceImageId}.jpg';
-              return BreedCustomCard(
-                breed: breed,
-                breedImage: breedImage,
-                redirectTo: () => context.push('/breed_detail', extra: breed.id),
-              );
-            },
-            separatorBuilder: (context, index) => const SizedBox(height: 16),
+          return SafeArea(
+            bottom: true,
+            child: ListView.separated(
+              controller: _scrollController,
+              itemCount: state.breeds.length + (state.isLoadingMore ? 1 : 0),
+              itemBuilder: (context, index) {
+                if (index >= state.breeds.length) {
+                  return const Center(child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: CircularProgressIndicator(),
+                  ));
+                }
+                final breed = state.breeds[index];
+                final breedImage = 'https://cdn2.thecatapi.com/images/${breed.referenceImageId}.jpg';
+                return BreedCustomCard(
+                  breed: breed,
+                  breedImage: breedImage,
+                  redirectTo: () => context.push('/breed_detail', extra: breed.id),
+                );
+              },
+              separatorBuilder: (context, index) => const SizedBox(height: 16),
+            ),
           );
         } else if (state is BreedListError && _page == 0) {
           return ErrorStateWidget(message: state.message);
