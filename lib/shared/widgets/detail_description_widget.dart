@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:reto_pragma/domain/models/breed_detail.dart';
+import 'package:reto_pragma/shared/widgets/common_rating_widget.dart';
 
 class DetailDescriptionWidget extends StatelessWidget {
   const DetailDescriptionWidget({
@@ -21,15 +22,43 @@ class DetailDescriptionWidget extends StatelessWidget {
         const SizedBox(height: 16),
         CustomDescriptionRow(title: 'Native country', value: breedDetail.origin),
         const SizedBox(height: 16),
-        CustomDescriptionRow(title: 'Temperament', onlyText: false ,customWidget: const SizedBox.shrink()),
-        const SizedBox(height: 4),
-        TemperamentGrid(breedTemperament: breedTemperament),
+        CustomDescriptionRow(
+          title: 'Intelligence',
+          onlyText: false,
+          customWidget: CommonRating(
+            rating: breedDetail.intelligence,
+            fullIcon: Icon(Icons.lightbulb, color: Colors.yellow),
+            emptyIcon: Icon(Icons.lightbulb_outline_rounded),
+          )
+        ),
+        const SizedBox(height: 16),
+        CustomDescriptionRow(
+          title: 'Adaptability',
+          onlyText: false,
+          customWidget: CommonRating(
+            rating: breedDetail.adaptability,
+            fullIcon: Icon(Icons.autorenew, color: Colors.lightGreen),
+            emptyIcon: Icon(Icons.lightbulb_outline_rounded),
+          )
+        ),
         const SizedBox(height: 16),
         CustomDescriptionRow(title: 'Life span', value: '${breedDetail.lifeSpan} years old'),
         const SizedBox(height: 16),
-        CustomDescriptionRow(title: 'Health issues', onlyText: false ,customWidget: HealthRating(healthRating: breedDetail.healthIssues)),
+        CustomDescriptionRow(title: 'Health issues', onlyText: false, customWidget: HealthRating(healthRating: breedDetail.healthIssues)),
         const SizedBox(height: 16),
-        CustomDescriptionRow(title: 'Dog friendly', onlyText: false ,customWidget: DogFriendlyRating(dogFriendlyRating: breedDetail.dogFriendly)),
+        CustomDescriptionRow(
+          title: 'Dog friendly',
+          onlyText: false,
+          customWidget: CommonRating(
+            rating: breedDetail.dogFriendly,
+            fullIcon: Image(image: AssetImage('assets/images/dog_face_filled.png')),
+            emptyIcon: Image(image: AssetImage('assets/images/dog_face_empty_2.png')),
+          )
+        ),
+        const SizedBox(height: 16),
+        CustomDescriptionRow(title: 'Temperament', onlyText: false, customWidget: const SizedBox.shrink()),
+        const SizedBox(height: 4),
+        TemperamentGrid(breedTemperament: breedTemperament),
       ],
     );
   }
@@ -56,6 +85,50 @@ class CustomDescriptionRow extends StatelessWidget {
       children: [
         Text('$title:', style: TextStyle(fontWeight: FontWeight.bold)),
         onlyText ? Text(value!) : customWidget!
+      ],
+    );
+  }
+}
+
+class HealthRating extends StatelessWidget {
+  const HealthRating({
+    super.key,
+    required this.healthRating,
+  });
+
+  final int healthRating;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        RatingBar.builder(
+          allowHalfRating: false,
+          ignoreGestures: true,
+          initialRating: healthRating.toDouble(),
+          itemBuilder: (context, index) {
+            switch (index) {
+              case 0:
+                return Icon(Icons.sentiment_very_satisfied_rounded, color: Colors.green,);
+              case 1:
+                return Icon(Icons.sentiment_satisfied_alt_rounded, color: Colors.lightGreen,);
+              case 2:
+                return Icon(Icons.sentiment_neutral_rounded, color: Colors.black87,);
+              case 3:
+                return Icon(Icons.sentiment_dissatisfied_rounded, color: Colors.orangeAccent,);
+              case 4:
+                return Icon(Icons.sentiment_very_dissatisfied_rounded, color: Colors.redAccent,);
+              default:
+                return Icon(Icons.sentiment_neutral_rounded, color: Colors.grey);
+            }
+          },
+          maxRating: 5,
+          itemPadding: EdgeInsetsGeometry.only(left: 8),
+          itemSize: 24,
+          onRatingUpdate: (value) => {}
+        ),
+        const SizedBox(width: 8),
+        Text(healthRating.toString())
       ],
     );
   }
@@ -111,77 +184,6 @@ class TemperamentGrid extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class HealthRating extends StatelessWidget {
-  const HealthRating({
-    super.key,
-    required this.healthRating,
-  });
-
-  final int healthRating;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        RatingBar.builder(
-          allowHalfRating: false,
-          ignoreGestures: true,
-          initialRating: healthRating.toDouble(),
-          itemBuilder: (context, index) {
-            switch (index) {
-              case 0:
-                return Icon(Icons.sentiment_very_satisfied_rounded, color: Colors.green,);
-              case 1:
-                return Icon(Icons.sentiment_satisfied_alt_rounded, color: Colors.lightGreen,);
-              case 2:
-                return Icon(Icons.sentiment_neutral_rounded, color: Colors.black87,);
-              case 3:
-                return Icon(Icons.sentiment_dissatisfied_rounded, color: Colors.orangeAccent,);
-              case 4:
-                return Icon(Icons.sentiment_very_dissatisfied_rounded, color: Colors.redAccent,);
-              default:
-                return Icon(Icons.sentiment_neutral_rounded, color: Colors.grey);
-            }
-          },
-          maxRating: 5,
-          itemPadding: EdgeInsetsGeometry.only(left: 8),
-          itemSize: 24,
-          onRatingUpdate: (value) => {}
-        ),
-        const SizedBox(width: 8),
-        Text(healthRating.toString())
-      ],
-    );
-  }
-}
-
-class DogFriendlyRating extends StatelessWidget {
-  const DogFriendlyRating({
-    super.key,
-    required this.dogFriendlyRating,
-  });
-
-  final int dogFriendlyRating;
-
-  @override
-  Widget build(BuildContext context) {
-    return RatingBar(
-      allowHalfRating: false,
-      ignoreGestures: true,
-      initialRating: dogFriendlyRating.toDouble(),
-      ratingWidget: RatingWidget(
-        full: Image(image: AssetImage('assets/images/dog_face_filled.png')),
-        half: const SizedBox.shrink(),
-        empty: Image(image: AssetImage('assets/images/dog_face_empty_2.png'))
-      ),
-      maxRating: 5,
-      itemPadding: EdgeInsetsGeometry.only(left: 8),
-      itemSize: 24,
-      onRatingUpdate: (value) => {}
     );
   }
 }

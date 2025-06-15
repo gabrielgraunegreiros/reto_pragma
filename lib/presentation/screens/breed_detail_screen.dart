@@ -26,26 +26,31 @@ class DetailWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BreedDetailBloc, BreedDetailState>(
-      builder: (context, state) {
-        if (state is BreedDetailLoading) {
-          return Scaffold(
-            appBar: AppBar(title: const Text('Detalle de raza'), centerTitle: true),
-            body: const Center(child: CircularProgressIndicator())
-          );
-        } else if (state is BreedDetailLoaded) {
-          final size = MediaQuery.sizeOf(context);
-          final breedDetail = state.breedDetail;
-          final breedImage = 'https://cdn2.thecatapi.com/images/${breedDetail.referenceImageId}.jpg';
-          final breedTemperament = breedDetail.temperament.contains(',')
-            ? breedDetail.temperament.split(',').map((e) => e.trim()).toList()
-            : [breedDetail.temperament.trim()];
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(state.breedDetail.name),
-              centerTitle: true,
-            ),
-            body: Column(
+    return Scaffold(
+      appBar: AppBar(
+        title: BlocBuilder<BreedDetailBloc, BreedDetailState>(
+          builder: (context, state) {
+            if (state is BreedDetailLoaded) {
+              return Text(state.breedDetail.name);
+            }
+            return const Text('Detalle de raza');
+          },
+        ),
+        centerTitle: true,
+      ),
+      body: BlocBuilder<BreedDetailBloc, BreedDetailState>(
+        builder: (context, state) {
+          if (state is BreedDetailLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          else if (state is BreedDetailLoaded) {
+            final size = MediaQuery.sizeOf(context);
+            final breedDetail = state.breedDetail;
+            final breedImage = 'https://cdn2.thecatapi.com/images/${breedDetail.referenceImageId}.jpg';
+            final breedTemperament = breedDetail.temperament.contains(',')
+              ? breedDetail.temperament.split(',').map((e) => e.trim()).toList()
+              : [breedDetail.temperament.trim()];
+            return Column(
               children: [
                 FadeInImage(
                   placeholder: AssetImage('assets/gifs/oia-uia.gif'),
@@ -53,7 +58,7 @@ class DetailWidget extends StatelessWidget {
                   imageErrorBuilder: ( _ , _ , _ ) => Image(image: AssetImage('assets/images/peeking_cat.png')),
                   height: size.height * 0.5,
                   width: double.maxFinite,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
                 Expanded(
                   child: SingleChildScrollView(
@@ -62,16 +67,13 @@ class DetailWidget extends StatelessWidget {
                   ),
                 )
               ],
-            )
-          );
-        } else if (state is BreedDetailError) {
-          return Scaffold(
-            appBar: AppBar(title: const Text('Breed Detail'), centerTitle: true),
-            body: ErrorStateWidget(message: state.message)
-          );
-        }
-        return SizedBox();
-      },
+            );
+          } else if (state is BreedDetailError) {
+            return ErrorStateWidget(message: state.message);
+          }
+          return SizedBox();
+        },
+      ),
     );
   }
 }

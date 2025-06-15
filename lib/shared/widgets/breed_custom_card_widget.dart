@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:reto_pragma/domain/models/breed.dart';
+import 'package:reto_pragma/shared/widgets/widgets.dart';
 
 class BreedCustomCard extends StatelessWidget {
   const BreedCustomCard({
@@ -26,7 +27,7 @@ class BreedCustomCard extends StatelessWidget {
             CardTitle(name: breed.name, redirectTo: redirectTo),
             CardImage(breedImage: breedImage),
             const SizedBox(height: 16),
-            CardDescription(origin: breed.origin, temperament: breed.temperament)                
+            CardDescription(origin: breed.origin, customWidget: IntelligenceRating(intelligence: breed.intelligence))                
           ],
         ),
       ),
@@ -84,19 +85,46 @@ class CardDescription extends StatelessWidget {
   const CardDescription({
     super.key,
     required this.origin,
-    required this.temperament
+    required this.customWidget
   });
 
   final String origin;
-  final String temperament;
+  final Widget customWidget;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(origin),
-        Text(temperament.split(',').first.trim()),
+        customWidget
+      ],
+    );
+  }
+}
+
+class IntelligenceRating extends StatelessWidget {
+  const IntelligenceRating({
+    super.key,
+    required this.intelligence,
+  });
+
+  final int intelligence;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        CommonRating(
+          rating: intelligence,
+          fullIcon: Icon(Icons.lightbulb, color: Colors.yellow),
+          emptyIcon: Icon(Icons.lightbulb_outline_rounded),
+          itemSize: 20,
+        ),
+        const SizedBox(height: 4),
+        Text('Intelligence', style: TextStyle(color: Colors.grey, fontSize: 10, fontStyle: FontStyle.italic))
       ],
     );
   }
