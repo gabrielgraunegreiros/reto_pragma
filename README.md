@@ -73,6 +73,10 @@ flutter run
 > 💡 **Nota:** Si al compilar en Android encuentras errores relacionados con el NDK, asegúrate de tener instalada la versión **27.0.12077973** desde:
 > `Android Studio > Settings > Languages & Frameworks > Android SDK > SDK Tools > NDK`
 
+## 📦 Descarga la APK
+
+Se puede descargar la última versión de la aplicación directamente desde la sección de Releases del repositorio.
+
 ---
 
 
