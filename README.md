@@ -33,6 +33,7 @@ Aplicación Flutter desarrollada como parte del Reto Pragma, que permite explora
 | `rxdart` | Transformadores como `debounceTime` |
 | `equatable` | Comparación de objetos en Bloc |
 
+> **📝** Nota: Se implementó la búsqueda mediante SearchDelegate para aprovechar el flujo nativo de búsqueda en Flutter. Si se requiere incorporar el filtrado directamente en el listado principal, el cambio sería sencillo de aplicar.
 
 ## 🚀 Instalación y ejecución
 
@@ -69,7 +70,11 @@ dart run flutter_native_splash:create
 flutter run
 ```
 
+> 💡 **Nota:** Si al compilar en Android encuentras errores relacionados con el NDK, asegúrate de tener instalada la versión **27.0.12077973** desde:
+> `Android Studio > Settings > Languages & Frameworks > Android SDK > SDK Tools > NDK`
+
 ---
+
 
 ## 👤 Autor
 
