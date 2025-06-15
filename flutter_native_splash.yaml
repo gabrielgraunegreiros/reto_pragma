@@ -1,0 +1,17 @@
+flutter_native_splash:
+  color: "#FFF8F0"
+
+  image: assets/icons/catbreeds_brand.png
+
+  branding: assets/icons/catbreeds_logo_as_brand.png
+
+  branding_mode: bottom
+
+  android_12:
+    image: assets/icons/catbreeds_brand.png
+
+    color: "#FFF8F0"
+
+    icon_background_color: "#FFF8F0"
+
+    branding: assets/icons/catbreeds_logo_as_brand.png
