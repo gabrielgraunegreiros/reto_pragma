@@ -44,7 +44,8 @@ class _ListWidgetState extends State<ListWidget> {
   void _onScroll() {
     if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 100) {
       final breedListBloc = context.read<BreedListBloc>();
-      if (breedListBloc.state is BreedListLoaded) {
+      final currentState = breedListBloc.state;
+      if (currentState is BreedListLoaded && !currentState.isLoadingMore && !currentState.hasReachedMax) {
         breedListBloc.add(FetchBreedList(page: ++_page, limit: _limit));
       }
     }

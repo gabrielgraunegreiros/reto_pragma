@@ -16,7 +16,11 @@ class BreedListBloc extends Bloc<BreedListEvent, BreedListState> {
         emit(currentState.copyWith(isLoadingMore: true));
         try {
           final moreBreeds = await repository.getBreeds(page: event.page, limit: event.limit);
-          emit(BreedListLoaded([...currentState.breeds, ...moreBreeds]));
+          if (moreBreeds.isEmpty) {
+            emit(currentState.copyWith(isLoadingMore: false, hasReachedMax: true));
+          } else {
+            emit(BreedListLoaded([...currentState.breeds, ...moreBreeds], isLoadingMore: false));
+          }
         } catch (e) {
           emit(BreedListError(e.toString()));
         }
