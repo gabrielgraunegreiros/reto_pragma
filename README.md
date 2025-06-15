@@ -18,8 +18,6 @@ Aplicación Flutter desarrollada como parte del Reto Pragma, que permite explora
 
 - Configuración mediante archivos .env.
 
----
-
 ## Tecnologías y paquetes usados
 
 | Paquete | Descripción |
@@ -72,7 +70,9 @@ dart run flutter_native_splash:create
 flutter run
 ```
 
-👤 Autor
+---
+
+## 👤 Autor
 
 Desarrollado por Gabriel Grau como parte del Reto Pragma.
 
