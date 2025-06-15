@@ -40,7 +40,6 @@ Aplicación Flutter desarrollada como parte del Reto Pragma, que permite explora
 
 ```bash
 git clone https://github.com/tu-usuario/reto_pragma.git
-cd reto_pragma
 ```
 
 2. **Instala dependencias**
