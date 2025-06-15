@@ -69,7 +69,11 @@ dart run flutter_native_splash:create
 flutter run
 ```
 
+> 💡 **Nota:** Si al compilar en Android encuentras errores relacionados con el NDK, asegúrate de tener instalada la versión **27.0.12077973** desde:
+> `Android Studio > Settings > Languages & Frameworks > Android SDK > SDK Tools > NDK`
+
 ---
+
 
 ## 👤 Autor
 
